@@ -40,6 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navLinks.classList.toggle('active');
+        });
+    }
+
     // Optional: Add simple intersection observer for fade-in animations on scroll
     const observerOptions = {
         threshold: 0.1,

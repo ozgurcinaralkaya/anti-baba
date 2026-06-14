@@ -813,3 +813,43 @@ body.modal-open {
         transform: translateX(calc(-50% - 2rem));
     }
 }
+
+/* Mobile Navbar Styles */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block !important;
+    }
+    
+    .nav-links {
+        display: none; /* Hidden by default on mobile */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #0f172a; /* Solid dark background */
+        padding: 2rem 0;
+        text-align: center;
+        gap: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .contact-dropdown-container {
+        position: static;
+    }
+    
+    .contact-dropdown {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        width: 90%;
+        margin: 1rem auto 0;
+        box-shadow: none;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
