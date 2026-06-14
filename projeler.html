@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projelerimiz - Öz-De İnşaat Mühendislik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=6">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar glass">
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px;">
+                <img src="logo.png" alt="Öz-De İnşaat Logo" style="width: 200px; height: 80px; margin: -10px 0; border-radius: 8px; object-fit: cover; object-position: left;">
+                <span style="font-size: 1.8rem; letter-spacing: -0.5px;">Öz-De İnşaat</span>
+            </div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" data-i18n="nav-home">Ana Sayfa</a></li>
+            <li><a href="projeler.html" style="color: var(--primary-color);" data-i18n="nav-projects">Projelerimiz</a></li>
+            <li><a href="hakkimizda.html" data-i18n="nav-about">Hakkımızda</a></li>
+            <li class="contact-dropdown-container">
+                <a href="#contact" class="btn-primary" data-i18n="nav-contact">Bize Ulaşın</a>
+                <div class="contact-dropdown">
+                    <ul>
+                        <li><span style="font-size: 1.2rem;">👤</span> <span data-i18n="contact-name">Mehmet Alkaya</span></li>
+                        <li><span style="font-size: 1.2rem;">📍</span> <span data-i18n="contact-address">Urla, İzmir</span></li>
+                        <li><span style="font-size: 1.2rem;">📞</span> <a href="tel:+905533447701" class="tel-link">0553 344 77 01</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#" class="lang-toggle" style="text-decoration: none; margin-left: 10px; display: inline-block;">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                        <img src="https://flagcdn.com/w40/gb.png" width="28" alt="English" style="border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-main); letter-spacing: 0.5px;">ENG</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main style="padding-top: 110px; min-height: 100vh;">
+        <section class="projects-page">
+            <h1 class="section-title" style="margin-top: 0;" data-i18n="proj-title">Tüm Projelerimiz</h1>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-item glass-card" data-project-id="1">
+                    <div class="project-img-wrapper">
+                        <img src="project1.png" alt="Urla Premium Villa">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-location">
+                            <span>📍</span> <span data-i18n="proj-izmir-urla">Urla, İzmir</span>
+                        </div>
+                        <h3 data-i18n="proj-1-title">Deniz Manzaralı Lüks Villa</h3>
+                        <p data-i18n="proj-1-desc">Doğayla iç içe, modern mimarinin sınırlarını zorlayan eşsiz deniz manzaralı villa projemiz. 4+1 geniş kullanım alanı ve müstakil havuzuyla size özel bir yaşam.</p>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-item glass-card" data-project-id="2">
+                    <div class="project-img-wrapper">
+                        <img src="project2.png" alt="Çeşme Modern Konut">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-location">
+                            <span>📍</span> <span data-i18n="proj-izmir-cesme">Çeşme, İzmir</span>
+                        </div>
+                        <h3 data-i18n="proj-2-title">Modern Havuzlu Konutlar</h3>
+                        <p data-i18n="proj-2-desc">Akıllı ev sistemleriyle donatılmış, yüksek güvenlikli ve estetik konut projemiz. Merkezi konumu ve zengin sosyal alanlarıyla şehrin dinamizmini yakalayın.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Fullscreen Scroll Mask Gallery Modal -->
+    <div id="gallery-modal" class="gallery-modal">
+        <button class="gallery-close-btn">&times;</button>
+        <div class="gallery-stack-container">
+            <!-- Dynamic slides will be injected here by JS -->
+        </div>
+    </div>
+
+    <script src="lang.js"></script>
+    <script src="script.js?v=2"></script>
+</body>
+</html>

@@ -1,67 +1,224 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Web Experience</title>
-    <meta name="description" content="A beautifully designed, modern web skeleton featuring glassmorphism and dynamic gradients.">
-    <link rel="stylesheet" href="style.css">
+    <title>Öz-De İnşaat Mühendislik</title>
+    <meta name="description" content="Öz-De İnşaat Mühendislik - Modern mimari ve mühendislik çözümleriyle geleceği inşa ediyoruz.">
+    <link rel="stylesheet" href="style.css?v=6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Background Elements -->
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <!-- Navigation -->
     <nav class="navbar glass">
-        <div class="logo">Brand.</div>
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px;">
+                <img src="logo.png" alt="Öz-De İnşaat Logo" style="width: 200px; height: 80px; margin: -10px 0; border-radius: 8px; object-fit: cover; object-position: left;">
+                <span style="font-size: 1.8rem; letter-spacing: -0.5px;">Öz-De İnşaat</span>
+            </div>
+        </a>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact" class="btn-primary">Contact Us</a></li>
+            <li><a href="index.html" style="color: var(--primary-color);" data-i18n="nav-home">Ana Sayfa</a></li>
+            <li><a href="projeler.html" data-i18n="nav-projects">Projelerimiz</a></li>
+            <li><a href="hakkimizda.html" data-i18n="nav-about">Hakkımızda</a></li>
+            <li class="contact-dropdown-container">
+                <a href="#contact" class="btn-primary" data-i18n="nav-contact">Bize Ulaşın</a>
+                <div class="contact-dropdown">
+                    <ul>
+                        <li><span style="font-size: 1.2rem;">👤</span> <span data-i18n="contact-name">Mehmet Alkaya</span></li>
+                        <li><span style="font-size: 1.2rem;">📍</span> <span data-i18n="contact-address">Urla, İzmir</span></li>
+                        <li><span style="font-size: 1.2rem;">📞</span> <a href="tel:+905533447701" class="tel-link">0553 344 77 01</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#" class="lang-toggle" style="text-decoration: none; margin-left: 10px; display: inline-block;">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+                        <img src="https://flagcdn.com/w40/gb.png" width="28" alt="English" style="border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <span style="font-size: 0.65rem; font-weight: 800; color: var(--text-main); letter-spacing: 0.5px;">ENG</span>
+                    </div>
+                </a>
+            </li>
         </ul>
     </nav>
 
     <main>
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="hero-content glass-card" id="tilt-card">
-                <h1>Build the <span class="text-gradient">Future</span></h1>
-                <p>A beautifully designed, modern web skeleton featuring glassmorphism, dynamic gradients, and smooth interactions.</p>
-                <div class="hero-buttons">
-                    <a href="#features" class="btn-primary">Get Started</a>
-                    <a href="#about" class="btn-secondary">Learn More</a>
+        <!-- Hero Slider Section -->
+        <section id="home" class="hero-slider">
+            <div class="slide active">
+                <img src="project1.png" alt="Lüks Yaşam Alanları">
+                <div class="slide-content glass-card">
+                    <h2 data-i18n="hero-title-1">Lüks Yaşam Alanları</h2>
+                    <p data-i18n="hero-desc-1">Yılların getirdiği deneyimle, modern mimarinin sınırlarını zorlayan eşsiz villa projeleri üretiyoruz. Bizi seçmeniz için en büyük neden; hayallerinizdeki yaşam alanını güvenli bir yuvaya dönüştürme tutkumuzdur.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="project2.png" alt="Modern Konut Projesi">
+                <div class="slide-content glass-card">
+                    <h2 data-i18n="hero-title-2">Şehirde Modern Konutlar</h2>
+                    <p data-i18n="hero-desc-2">Şehrin dinamiklerine uyum sağlayan, estetik ve sağlam projeler inşa ediyoruz. Yenilikçi yaklaşımımız ve kalitemizle, size en iyisini sunmaya devam ediyoruz.</p>
+                </div>
+            </div>
+            
+            <!-- Slider Controls -->
+            <div class="slider-controls">
+                <button id="prev-slide" class="slide-btn">❮</button>
+                <button id="next-slide" class="slide-btn">❯</button>
+            </div>
+        </section>
+
+        <!-- Expertise Section -->
+        <section id="expertise" class="expertise" style="padding: 6rem 5% 2rem;">
+            <h2 class="section-title" data-i18n="exp-title" style="text-align: center; margin-bottom: 3rem;">Uzmanlık Alanlarımız</h2>
+            <div class="expertise-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+                <div class="expertise-card glass-card" style="padding: 2.5rem; text-align: center; transition: transform 0.3s ease;">
+                    <div class="exp-icon" style="font-size: 3rem; margin-bottom: 1rem;">🏛️</div>
+                    <h3 data-i18n="exp-1-title" style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.4rem;">Mimari Tasarım</h3>
+                    <p data-i18n="exp-1-desc" style="color: var(--text-muted); line-height: 1.6;">Modern ve estetik çizgilerle, ihtiyaçlarınıza özel yenilikçi mimari projeler çiziyoruz.</p>
+                </div>
+                <div class="expertise-card glass-card" style="padding: 2.5rem; text-align: center; transition: transform 0.3s ease;">
+                    <div class="exp-icon" style="font-size: 3rem; margin-bottom: 1rem;">🏗️</div>
+                    <h3 data-i18n="exp-2-title" style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.4rem;">Anahtar Teslim İnşaat</h3>
+                    <p data-i18n="exp-2-desc" style="color: var(--text-muted); line-height: 1.6;">Temelden çatıya, en yüksek kalite standartlarında kusursuz anahtar teslim projeler üretiyoruz.</p>
+                </div>
+                <div class="expertise-card glass-card" style="padding: 2.5rem; text-align: center; transition: transform 0.3s ease;">
+                    <div class="exp-icon" style="font-size: 3rem; margin-bottom: 1rem;">🛋️</div>
+                    <h3 data-i18n="exp-3-title" style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.4rem;">İç Mimari & Dekorasyon</h3>
+                    <p data-i18n="exp-3-desc" style="color: var(--text-muted); line-height: 1.6;">Yaşam alanlarınızı hem fonksiyonel hem de ultra lüks detaylarla yeniden yaratıyoruz.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section id="features" class="features">
-            <h2 class="section-title">Why Choose Us</h2>
-            <div class="features-grid">
-                <div class="feature-card glass-card">
-                    <div class="icon">✨</div>
-                    <h3>Modern Design</h3>
-                    <p>Built with the latest trends including glassmorphism, gradient text, and dark mode aesthetics.</p>
+        <!-- Why Us Section (Split Layout) -->
+        <section id="why-us" class="why-us-split" style="padding: 4rem 5% 6rem; max-width: 1200px; margin: 0 auto; display: flex; gap: 4rem; align-items: center; flex-wrap: wrap;">
+            <!-- Left Side Image -->
+            <div class="why-img-wrapper" style="flex: 1; min-width: 300px; position: relative;">
+                <img src="project1.png" alt="Why Choose Us" style="width: 100%; height: 500px; object-fit: cover; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                <div class="glass-card" style="position: absolute; bottom: -20px; right: -20px; padding: 1.5rem 2rem; border-radius: 12px;">
+                    <span style="font-size: 2.5rem; font-weight: 800; color: var(--primary-color);">25+</span>
+                    <br>
+                    <span style="color: var(--text-muted); font-weight: 600;" data-i18n="stat-exp">Yıllık Tecrübe</span>
                 </div>
-                <div class="feature-card glass-card">
-                    <div class="icon">⚡</div>
-                    <h3>Lightning Fast</h3>
-                    <p>Optimized for speed and performance utilizing clean HTML, CSS, and Vanilla JavaScript.</p>
-                </div>
-                <div class="feature-card glass-card">
-                    <div class="icon">📱</div>
-                    <h3>Fully Responsive</h3>
-                    <p>Flawless and intuitive user experience across all devices and screen sizes.</p>
+            </div>
+            
+            <!-- Right Side List -->
+            <div class="why-content" style="flex: 1; min-width: 300px;">
+                <h2 class="section-title" data-i18n="why-title" style="margin-bottom: 2rem; text-align: left;">Neden Biz?</h2>
+                <div class="why-list" style="display: flex; flex-direction: column; gap: 2rem;">
+                    <div class="why-item" style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                        <div class="why-icon" style="font-size: 2rem; color: var(--primary-color); background: rgba(255, 215, 0, 0.1); padding: 1rem; border-radius: 12px; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">💎</div>
+                        <div>
+                            <h3 data-i18n="why-1-title" style="font-size: 1.4rem; margin-bottom: 0.5rem;">Premium Kalite</h3>
+                            <p data-i18n="why-1-desc" style="color: var(--text-muted); line-height: 1.6;">Projelerimizde sadece en üst düzey malzemeleri ve dünya standartlarında işçiliği tercih ediyoruz.</p>
+                        </div>
+                    </div>
+                    <div class="why-item" style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                        <div class="why-icon" style="font-size: 2rem; color: var(--primary-color); background: rgba(255, 215, 0, 0.1); padding: 1rem; border-radius: 12px; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">⏱️</div>
+                        <div>
+                            <h3 data-i18n="why-2-title" style="font-size: 1.4rem; margin-bottom: 0.5rem;">Zamanında Teslim</h3>
+                            <p data-i18n="why-2-desc" style="color: var(--text-muted); line-height: 1.6;">Verdiğimiz sözleri tutmak en büyük değerimizdir. Projelerinizi tam vaktinde size teslim ediyoruz.</p>
+                        </div>
+                    </div>
+                    <div class="why-item" style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                        <div class="why-icon" style="font-size: 2rem; color: var(--primary-color); background: rgba(255, 215, 0, 0.1); padding: 1rem; border-radius: 12px; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🤝</div>
+                        <div>
+                            <h3 data-i18n="why-3-title" style="font-size: 1.4rem; margin-bottom: 0.5rem;">Şeffaf Süreç</h3>
+                            <p data-i18n="why-3-desc" style="color: var(--text-muted); line-height: 1.6;">Tasarım aşamasından anahtar teslime kadar tüm süreci sizinle adım adım ve şeffafça paylaşıyoruz.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- Stats Row -->
+        <section id="stats" style="background: linear-gradient(90deg, rgba(20,20,20,1) 0%, rgba(40,40,40,1) 100%); padding: 4rem 5%;">
+            <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; text-align: center;">
+                <div>
+                    <div style="font-size: 3rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">25+</div>
+                    <div data-i18n="stat-exp" style="color: var(--text-muted); font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Yıllık Tecrübe</div>
+                </div>
+                <div>
+                    <div style="font-size: 3rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">50+</div>
+                    <div data-i18n="stat-proj" style="color: var(--text-muted); font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Tamamlanan Proje</div>
+                </div>
+                <div>
+                    <div style="font-size: 3rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">%100</div>
+                    <div data-i18n="stat-sat" style="color: var(--text-muted); font-size: 1.1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Müşteri Memnuniyeti</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section id="process" style="padding: 6rem 5%;">
+            <h2 class="section-title" data-i18n="proc-title" style="text-align: center; margin-bottom: 4rem;">Çalışma Sürecimiz</h2>
+            <div class="process-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+                <div class="process-step glass-card" style="padding: 2rem; text-align: center; position: relative;">
+                    <div style="width: 50px; height: 50px; background: var(--primary-color); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 1.5rem;">1</div>
+                    <h3 data-i18n="proc-1-title" style="margin-bottom: 1rem;">Keşif & Tasarım</h3>
+                    <p data-i18n="proc-1-desc" style="color: var(--text-muted); font-size: 0.95rem;">İhtiyaçlarınızı analiz edip hayalinizdeki projeyi 3D olarak tasarlıyoruz.</p>
+                </div>
+                <div class="process-step glass-card" style="padding: 2rem; text-align: center; position: relative;">
+                    <div style="width: 50px; height: 50px; background: var(--primary-color); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 1.5rem;">2</div>
+                    <h3 data-i18n="proc-2-title" style="margin-bottom: 1rem;">Planlama</h3>
+                    <p data-i18n="proc-2-desc" style="color: var(--text-muted); font-size: 0.95rem;">Bütçe, malzeme seçimi ve zaman çizelgesini netleştiriyoruz.</p>
+                </div>
+                <div class="process-step glass-card" style="padding: 2rem; text-align: center; position: relative;">
+                    <div style="width: 50px; height: 50px; background: var(--primary-color); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 1.5rem;">3</div>
+                    <h3 data-i18n="proc-3-title" style="margin-bottom: 1rem;">İnşa & Uygulama</h3>
+                    <p data-i18n="proc-3-desc" style="color: var(--text-muted); font-size: 0.95rem;">Alanında uzman ekiplerimizle projeyi sahada hayata geçiriyoruz.</p>
+                </div>
+                <div class="process-step glass-card" style="padding: 2rem; text-align: center; position: relative;">
+                    <div style="width: 50px; height: 50px; background: var(--primary-color); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 1.5rem;">4</div>
+                    <h3 data-i18n="proc-4-title" style="margin-bottom: 1rem;">Anahtar Teslim</h3>
+                    <p data-i18n="proc-4-desc" style="color: var(--text-muted); font-size: 0.95rem;">Titiz bir son kontrolden sonra yapıyı size eksiksiz teslim ediyoruz.</p>
+                </div>
+            </div>
+        </section>
+
+
+
     </main>
 
-    <script src="script.js"></script>
+    <!-- Global Footer with Contact -->
+    <footer id="contact" class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;">
+                    <span style="font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px;">Öz-De İnşaat</span>
+                </div>
+                <p style="color: var(--text-muted); line-height: 1.6; max-width: 300px;" data-i18n="brand-desc">Kaliteyi bir standart haline getirerek nesiller boyu ayakta kalacak değerli yaşam alanları inşa ediyoruz.</p>
+            </div>
+            
+            <div class="footer-contact">
+                <h4 style="font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--primary-color);" data-i18n="footer-contact-title">İletişim Bilgilerimiz</h4>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem; color: var(--text-main);">
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.2rem;">📞</span> <a href="tel:+905533447701" style="color: inherit; text-decoration: none; font-weight: bold;">0553 344 77 01</a>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.2rem;">📍</span> <span>Urla, İzmir</span>
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.2rem;">👤</span> <span>Mehmet Alkaya</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p data-i18n="footer-rights">&copy; 2026 Öz-De İnşaat Mühendislik. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="lang.js"></script>
+    <script src="script.js?v=2"></script>
 </body>
 </html>

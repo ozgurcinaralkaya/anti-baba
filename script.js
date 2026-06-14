@@ -56,11 +56,183 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    const featureCards = document.querySelectorAll('.feature-card');
-    featureCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-        observer.observe(card);
+    const animatedElements = document.querySelectorAll('.project-card, .about-container, .stat-box');
+    animatedElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        // Modulo 3 is used to stagger features, but projects will also stagger nicely
+        element.style.transition = `all 0.6s ease ${(index % 3) * 0.1}s`;
+        observer.observe(element);
     });
+
+
+
+    // Hero Slider Logic
+    const slides = document.querySelectorAll('.slide');
+    const nextBtn = document.getElementById('next-slide');
+    const prevBtn = document.getElementById('prev-slide');
+    
+    if (slides.length > 0) {
+        let currentSlide = 0;
+        let slideInterval;
+
+        const goToSlide = (index) => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        };
+
+        const nextSlide = () => goToSlide(currentSlide + 1);
+        const prevSlide = () => goToSlide(currentSlide - 1);
+
+        const startSlider = () => {
+            slideInterval = setInterval(nextSlide, 5000);
+        };
+
+        const resetSlider = () => {
+            clearInterval(slideInterval);
+            startSlider();
+        };
+
+        if (nextBtn && prevBtn) {
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetSlider();
+            });
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                resetSlider();
+            });
+        }
+
+        startSlider();
+    }
+
+    // Gallery Modal Logic
+    const projectItems = document.querySelectorAll('.project-item');
+    const galleryModal = document.getElementById('gallery-modal');
+    const galleryStack = document.querySelector('.gallery-stack-container');
+    const closeBtn = document.querySelector('.gallery-close-btn');
+
+    if (galleryModal) {
+        let isGalleryActive = false;
+        let previousScrollY = 0;
+        
+        projectItems.forEach(item => {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', () => {
+                const title = item.querySelector('h3').innerText;
+                const imgSrc = item.querySelector('img').src;
+                
+                previousScrollY = window.scrollY; // Store the current scroll position
+                
+                galleryStack.innerHTML = '';
+                const dummyImages = ['dummy1.png', 'dummy2.png', 'dummy3.png', 'dummy4.png'];
+                const currentLang = localStorage.getItem('lang') || 'tr';
+                const imageLabel = currentLang === 'tr' ? 'Görsel' : 'Image';
+                
+                for (let i = 0; i < 4; i++) {
+                    const zIndex = 10 - i;
+                    const displaySrc = i === 0 ? imgSrc : dummyImages[i];
+                    
+                    const slide = document.createElement('div');
+                    slide.className = 'gallery-slide';
+                    slide.style.zIndex = zIndex;
+                    slide.innerHTML = `
+                        <img src="${displaySrc}" alt="Gallery Image">
+                        <div class="gallery-caption">
+                            <h3>${title} - ${imageLabel} ${i+1}</h3>
+                        </div>
+                    `;
+                    galleryStack.appendChild(slide);
+                }
+                
+                isGalleryActive = true;
+                document.body.classList.add('modal-open');
+                galleryModal.classList.add('active');
+                
+                // Add to browser history so back button works for the modal
+                history.pushState({ galleryOpen: true }, '', '#gallery');
+                
+                // Force body scroll to act as the gallery scroll
+                document.body.style.height = `${4 * 100}vh`;
+                window.scrollTo(0, 0);
+                updateGalleryScroll();
+            });
+        });
+        
+        const closeGallery = () => {
+            if (!isGalleryActive) return;
+            isGalleryActive = false;
+            document.body.classList.remove('modal-open');
+            galleryModal.classList.remove('active');
+            document.body.style.height = 'auto';
+            window.scrollTo(0, previousScrollY); // Restore previous scroll position
+        };
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                closeGallery();
+                // Clean up the URL hash if it was added
+                if (window.location.hash === '#gallery') {
+                    history.replaceState(null, '', window.location.pathname);
+                }
+            });
+        }
+        
+        // Listen for browser Back button
+        window.addEventListener('popstate', () => {
+            if (isGalleryActive) {
+                closeGallery();
+            }
+        });
+        
+        const updateGalleryScroll = () => {
+            if (!isGalleryActive) return;
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const slides = galleryModal.querySelectorAll('.gallery-slide');
+            
+            slides.forEach((sec, index) => {
+                let currentActiveIndex = Math.floor(scrollY / windowHeight);
+                if (currentActiveIndex >= slides.length - 1) {
+                    currentActiveIndex = slides.length - 1;
+                }
+
+                if (index === currentActiveIndex || index === currentActiveIndex + 1) {
+                    sec.style.visibility = 'visible';
+                } else {
+                    sec.style.visibility = 'hidden';
+                }
+
+                if (index === slides.length - 1) {
+                    sec.style.maskImage = 'none';
+                    sec.style.webkitMaskImage = 'none';
+                    return;
+                }
+                
+                const sectionStart = index * windowHeight;
+                const sectionEnd = (index + 1) * windowHeight;
+                
+                let progress = 0;
+                if (scrollY >= sectionStart && scrollY <= sectionEnd) {
+                    progress = (scrollY - sectionStart) / windowHeight;
+                } else if (scrollY > sectionEnd) {
+                    progress = 1;
+                }
+                
+                const p = -20 + (progress * 120);
+                sec.style.webkitMaskImage = `linear-gradient(to top, transparent ${p}%, black ${p + 20}%)`;
+                sec.style.maskImage = `linear-gradient(to top, transparent ${p}%, black ${p + 20}%)`;
+                
+                if (progress >= 1) {
+                    sec.style.pointerEvents = 'none';
+                } else {
+                    sec.style.pointerEvents = 'auto';
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', updateGalleryScroll);
+    }
 });
