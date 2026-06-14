@@ -78,6 +78,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    // Global Dropdown Logic (Fixed for mask-image clipping)
+    const contactBtn = document.getElementById('contact-btn');
+    const globalDropdown = document.getElementById('global-contact-dropdown');
+    let dropdownTimeout;
+
+    if (contactBtn && globalDropdown) {
+        // We use mouseenter/mouseleave because CSS hover is broken by moving the DOM element
+        const showDropdown = () => {
+            clearTimeout(dropdownTimeout);
+            const rect = contactBtn.getBoundingClientRect();
+            // Position exactly below the button
+            globalDropdown.style.display = 'block';
+            globalDropdown.style.top = (rect.bottom + window.scrollY + 10) + 'px';
+            // Align to the right edge of the button
+            globalDropdown.style.left = (rect.right - 250) + 'px'; 
+            globalDropdown.style.right = 'auto'; // Reset right just in case
+        };
+
+        const hideDropdown = () => {
+            dropdownTimeout = setTimeout(() => {
+                globalDropdown.style.display = 'none';
+            }, 300);
+        };
+
+        contactBtn.addEventListener('mouseenter', showDropdown);
+        contactBtn.addEventListener('mouseleave', hideDropdown);
+        globalDropdown.addEventListener('mouseenter', showDropdown);
+        globalDropdown.addEventListener('mouseleave', hideDropdown);
+
+        // Also close dropdown on scroll to avoid floating issues
+        window.addEventListener('scroll', () => {
+            globalDropdown.style.display = 'none';
+        });
+    }
+
+    // Navbar Fade from Bottom to Top on Scroll
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        navbar.style.webkitMaskImage = `linear-gradient(to top, transparent -20%, black 0%)`;
+        navbar.style.maskImage = `linear-gradient(to top, transparent -20%, black 0%)`;
+
+        window.addEventListener('scroll', () => {
+            let scrollY = window.scrollY;
+            let progress = scrollY / 300; // 0 to 1
+            
+            if (progress < 0) progress = 0;
+            if (progress > 1) progress = 1;
+            
+            let p = -20 + (progress * 120);
+            
+            navbar.style.webkitMaskImage = `linear-gradient(to top, transparent ${p}%, black ${p + 20}%)`;
+            navbar.style.maskImage = `linear-gradient(to top, transparent ${p}%, black ${p + 20}%)`;
+            
+            if (progress >= 1) {
+                navbar.style.pointerEvents = 'none';
+            } else {
+                navbar.style.pointerEvents = 'auto';
+            }
+        });
+    }
+
     // Hero Slider Logic
     const slides = document.querySelectorAll('.slide');
     const nextBtn = document.getElementById('next-slide');
