@@ -76,7 +76,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (navbar) {
-        window.addEventListener('scroll', updateMask);
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateMask();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
         updateMask(); // initialize
     }
 
