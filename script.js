@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 previousScrollY = window.scrollY; // Store the current scroll position
                 
                 galleryStack.innerHTML = '';
-                const dummyImages = ['dummy1.png', 'dummy2.png', 'dummy3.png', 'dummy4.png'];
+                const dummyImages = ['dummy1.jpg', 'dummy2.jpg', 'dummy3.jpg', 'dummy4.jpg'];
                 const currentLang = localStorage.getItem('lang') || 'tr';
                 const imageLabel = currentLang === 'tr' ? 'Görsel' : 'Image';
                 
