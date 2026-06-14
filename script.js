@@ -211,6 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const galleryModal = document.getElementById('gallery-modal');
     const galleryStack = document.querySelector('.gallery-stack-container');
     const closeBtn = document.querySelector('.gallery-close-btn');
+    const mainContent = document.querySelector('main');
+    const footerContent = document.querySelector('footer');
 
     if (galleryModal) {
         let isGalleryActive = false;
@@ -249,6 +251,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.body.classList.add('modal-open');
                 galleryModal.classList.add('active');
                 
+                // Hide background contents so they don't scroll
+                if (mainContent) mainContent.style.display = 'none';
+                if (footerContent) footerContent.style.display = 'none';
+                if (navbar) navbar.style.display = 'none';
+                
                 // Add to browser history so back button works for the modal
                 history.pushState({ galleryOpen: true }, '', '#gallery');
                 
@@ -264,6 +271,12 @@ document.addEventListener('DOMContentLoaded', () => {
             isGalleryActive = false;
             document.body.classList.remove('modal-open');
             galleryModal.classList.remove('active');
+            
+            // Restore background contents
+            if (mainContent) mainContent.style.display = 'block';
+            if (footerContent) footerContent.style.display = 'block';
+            if (navbar) navbar.style.display = 'flex';
+            
             document.body.style.height = 'auto';
             window.scrollTo(0, previousScrollY); // Restore previous scroll position
         };
