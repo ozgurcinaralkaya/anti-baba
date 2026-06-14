@@ -43,11 +43,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile Menu Toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
+    const navbar = document.querySelector('.navbar');
+    let isMobileMenuOpen = false;
     
+    // Navbar Fade from Bottom to Top on Scroll
+    const updateMask = () => {
+        if (!navbar) return;
+        
+        if (isMobileMenuOpen) {
+            navbar.style.webkitMaskImage = 'none';
+            navbar.style.maskImage = 'none';
+            navbar.style.pointerEvents = 'auto';
+            return;
+        }
+        
+        let scrollY = window.scrollY;
+        let progress = scrollY / 300; // 0 to 1
+        
+        if (progress < 0) progress = 0;
+        if (progress > 1) progress = 1;
+        
+        let p = -20 + (progress * 120);
+        
+        navbar.style.webkitMaskImage = `linear-gradient(to top, transparent ${p}%, black ${p + 20}%)`;
+        navbar.style.maskImage = `linear-gradient(to top, transparent ${p}%, black ${p + 20}%)`;
+        
+        if (progress >= 1) {
+            navbar.style.pointerEvents = 'none';
+        } else {
+            navbar.style.pointerEvents = 'auto';
+        }
+    };
+
+    if (navbar) {
+        window.addEventListener('scroll', updateMask);
+        updateMask(); // initialize
+    }
+
     if (mobileMenuBtn && navLinks) {
         mobileMenuBtn.addEventListener('click', (e) => {
             e.preventDefault();
             navLinks.classList.toggle('active');
+            isMobileMenuOpen = navLinks.classList.contains('active');
+            updateMask();
         });
     }
 
@@ -76,8 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 
-
-
     // Global Dropdown Logic (Fixed for mask-image clipping)
     const contactBtn = document.getElementById('contact-btn');
     const globalDropdown = document.getElementById('global-contact-dropdown');
@@ -91,9 +127,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // Position exactly below the button
             globalDropdown.style.display = 'block';
             globalDropdown.style.top = (rect.bottom + window.scrollY + 10) + 'px';
-            // Align to the right edge of the button
-            globalDropdown.style.left = (rect.right - 250) + 'px'; 
-            globalDropdown.style.right = 'auto'; // Reset right just in case
+            
+            // Adjust for mobile vs desktop
+            if (window.innerWidth <= 768) {
+                globalDropdown.style.left = '50%';
+                globalDropdown.style.transform = 'translateX(-50%)';
+                globalDropdown.style.width = '90%';
+            } else {
+                globalDropdown.style.left = (rect.right - 250) + 'px'; 
+                globalDropdown.style.right = 'auto'; // Reset right just in case
+                globalDropdown.style.transform = 'none';
+                globalDropdown.style.width = '250px';
+            }
         };
 
         const hideDropdown = () => {
@@ -110,31 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Also close dropdown on scroll to avoid floating issues
         window.addEventListener('scroll', () => {
             globalDropdown.style.display = 'none';
-        });
-    }
-
-    // Navbar Fade from Bottom to Top on Scroll
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-        navbar.style.webkitMaskImage = `linear-gradient(to top, transparent -20%, black 0%)`;
-        navbar.style.maskImage = `linear-gradient(to top, transparent -20%, black 0%)`;
-
-        window.addEventListener('scroll', () => {
-            let scrollY = window.scrollY;
-            let progress = scrollY / 300; // 0 to 1
             
-            if (progress < 0) progress = 0;
-            if (progress > 1) progress = 1;
-            
-            let p = -20 + (progress * 120);
-            
-            navbar.style.webkitMaskImage = `linear-gradient(to top, transparent ${p}%, black ${p + 20}%)`;
-            navbar.style.maskImage = `linear-gradient(to top, transparent ${p}%, black ${p + 20}%)`;
-            
-            if (progress >= 1) {
-                navbar.style.pointerEvents = 'none';
-            } else {
-                navbar.style.pointerEvents = 'auto';
+            // Auto close mobile menu on scroll
+            if (isMobileMenuOpen && window.scrollY > 50) {
+                navLinks.classList.remove('active');
+                isMobileMenuOpen = false;
+                updateMask();
             }
         });
     }
